@@ -6,6 +6,8 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
+import frc.robot.commands.TankDrive;
+import frc.robot.subsystems.DriveSubsystem;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -14,6 +16,8 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
  * subsystems, commands, and trigger mappings) should be declared here.
  */
 public class RobotContainer {
+
+  DriveSubsystem driveSubsystem = new DriveSubsystem();
 
   // Controller
   private final CommandXboxController primary = new CommandXboxController(0);
@@ -26,6 +30,11 @@ public class RobotContainer {
   // Set bindings for controllers / other set triggers
   private void configureBindings() {
 
+    /* Driving - Left & Right Sticks */
+    driveSubsystem.setDefaultCommand(
+        new TankDrive(driveSubsystem, () -> primary.getLeftY(), () -> -primary.getRightY())
+    );
+    
   }
 
   // Ran periodicly (called in Robot.java)
