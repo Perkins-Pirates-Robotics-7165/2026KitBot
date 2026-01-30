@@ -12,12 +12,11 @@ public class ShooterSubsystem extends SubsystemBase {
     public ShooterSubsystem() {}
 
     /*
-     * Drive the robot
+     * Start the shooter
      * 
-     * @param left - Left drive percentage [-1.0, 1.0]
-     * @param right - Right drive percentage [-1.0, 1.0]
+     * @param speed - Switch Motor drive percentage [-1.0, 1.0]
      */
-    public void intake(double speed) {
+    public void shoot(double speed) {
         switchIntakeMotor.set(TalonSRXControlMode.PercentOutput, -speed);
     }
 

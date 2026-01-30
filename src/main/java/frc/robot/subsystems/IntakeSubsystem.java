@@ -13,7 +13,7 @@ public class IntakeSubsystem extends SubsystemBase {
     public IntakeSubsystem() {}
 
     /*
-     * Drive the robot
+     * Start the intake
      * 
      * @param left - Left drive percentage [-1.0, 1.0]
      * @param right - Right drive percentage [-1.0, 1.0]
