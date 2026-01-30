@@ -6,8 +6,12 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
+import frc.robot.commands.Intake;
+import frc.robot.commands.Shoot;
 import frc.robot.commands.TankDrive;
 import frc.robot.subsystems.DriveSubsystem;
+import frc.robot.subsystems.IntakeSubsystem;
+import frc.robot.subsystems.ShooterSubsystem;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -17,6 +21,8 @@ import frc.robot.subsystems.DriveSubsystem;
  */
 public class RobotContainer {
 
+  IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
+  ShooterSubsystem shooterSubsystem = new ShooterSubsystem();
   DriveSubsystem driveSubsystem = new DriveSubsystem();
 
   // Controller
@@ -35,6 +41,15 @@ public class RobotContainer {
         new TankDrive(driveSubsystem, () -> primary.getLeftY(), () -> -primary.getRightY())
     );
     
+    /* Intaking */
+    primary.b().whileTrue(
+      new Intake(intakeSubsystem, 0.1)
+    );
+
+    /* Shooting */
+    primary.leftTrigger(0.1).whileTrue(
+      new Shoot(shooterSubsystem, 0.1)
+    );
   }
 
   // Ran periodicly (called in Robot.java)
