@@ -1,5 +1,7 @@
 package frc.robot.subsystems;
 
+import java.util.function.Supplier;
+
 import com.ctre.phoenix.motorcontrol.TalonSRXControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
@@ -20,6 +22,14 @@ public class ShooterSubsystem extends SubsystemBase {
     public void shoot(double speed) {
         groundIntakeMotor.set(TalonSRXControlMode.PercentOutput, speed);
         switchIntakeMotor.set(TalonSRXControlMode.PercentOutput, -speed);
+    }
+
+    public void revShoot(double speed, Supplier<Boolean> startGroundIntake) {
+        groundIntakeMotor.set(TalonSRXControlMode.PercentOutput, speed);
+
+        if (startGroundIntake.get()) {
+            switchIntakeMotor.set(TalonSRXControlMode.PercentOutput, -speed);
+        }
     }
 
     // Period function on field, called every 20ms

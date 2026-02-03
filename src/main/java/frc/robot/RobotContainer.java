@@ -7,6 +7,7 @@ package frc.robot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.commands.Intake;
+import frc.robot.commands.RevShoot;
 import frc.robot.commands.Shoot;
 import frc.robot.commands.TankDrive;
 import frc.robot.subsystems.DriveSubsystem;
@@ -43,13 +44,13 @@ public class RobotContainer {
     
     /* Intaking */
 
-    // Intake - B
-    primary.b().whileTrue(
+    // Intake - Left Trigger
+    primary.leftTrigger(0.1).whileTrue(
       new Intake(intakeSubsystem, 0.7, 1.0)
     );
 
-    // Reverse intake - Left Stick & B
-    primary.b().and(primary.rightStick()).whileTrue(
+    // Reverse intake - B
+    primary.b().whileTrue(
       new Intake(intakeSubsystem, -0.7, -1.0)
     );
 
@@ -58,12 +59,12 @@ public class RobotContainer {
 
     // Shoot - Right Trigger
     primary.rightTrigger(0.1).whileTrue(
-      new Shoot(shooterSubsystem, 1.0)
+      new RevShoot(shooterSubsystem, 1.0, () -> primary.leftBumper().getAsBoolean())
     );
 
     // Reverse Shoot - Left Trigger
-    primary.leftTrigger(0.1).whileTrue(
-      new Shoot(shooterSubsystem, -1.0)
+    primary.a().whileTrue(
+      new Shoot(shooterSubsystem, -0.7)
     );
 
   }
