@@ -15,12 +15,22 @@ public class IntakeSubsystem extends SubsystemBase {
     /*
      * Start the intake
      * 
-     * @param left - Left drive percentage [-1.0, 1.0]
-     * @param right - Right drive percentage [-1.0, 1.0]
+     * @param speed - Both Motor speeds [-1.0, 1.0]
      */
     public void intake(double speed) {
         groundIntakeMotor.set(TalonSRXControlMode.PercentOutput, speed);
         switchIntakeMotor.set(TalonSRXControlMode.PercentOutput, speed);
+    }
+
+    /*
+     * Start the intake
+     * 
+     * @param speed - Ground motor speed percentage [-1.0, 1.0]
+     * @param speedSwitch - Switch motor speed percentage [-1.0, 1.0]
+     */
+    public void intake(double speed, double speedSwitch) {
+        groundIntakeMotor.set(TalonSRXControlMode.PercentOutput, speed);
+        switchIntakeMotor.set(TalonSRXControlMode.PercentOutput, speedSwitch);
     }
 
     // Period function on field, called every 20ms

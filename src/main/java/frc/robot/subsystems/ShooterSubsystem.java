@@ -7,6 +7,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class ShooterSubsystem extends SubsystemBase {
 
+    TalonSRX groundIntakeMotor = new TalonSRX(4);
     TalonSRX switchIntakeMotor = new TalonSRX(5);
 
     public ShooterSubsystem() {}
@@ -17,6 +18,7 @@ public class ShooterSubsystem extends SubsystemBase {
      * @param speed - Switch Motor drive percentage [-1.0, 1.0]
      */
     public void shoot(double speed) {
+        groundIntakeMotor.set(TalonSRXControlMode.PercentOutput, speed);
         switchIntakeMotor.set(TalonSRXControlMode.PercentOutput, -speed);
     }
 

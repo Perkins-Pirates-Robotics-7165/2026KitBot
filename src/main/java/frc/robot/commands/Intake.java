@@ -7,12 +7,13 @@ public class Intake extends Command {
 
     private final IntakeSubsystem intakeSubsystem;
     private final double speed;
+    private final double speedSwitch;
 
     /**
      * Starts the intake motors to intake balls
      * 
      * @param intakeSubsystem - The subsystem for intaking
-     * @param speed - Intake motors' speeds. 
+     * @param speed - Intake & switch motor speeds. 
      */
     public Intake(IntakeSubsystem intakeSubsystem, double speed) {
 
@@ -21,6 +22,27 @@ public class Intake extends Command {
 
         // Saves the two supplier functions
         this.speed = speed;
+        this.speedSwitch = speed;
+
+        // Adds the requirement of the intake subsystem so two commands can't use it at once
+        addRequirements(intakeSubsystem);
+    }
+
+    /**
+     * Starts the intake motors to intake balls
+     * 
+     * @param intakeSubsystem - The subsystem for intaking
+     * @param speed - Intake motor speeds. 
+     * @param speedSwitch - Switch motor speed
+     */
+    public Intake(IntakeSubsystem intakeSubsystem, double speed, double speedSwitch) {
+
+        // Set the subsystem
+        this.intakeSubsystem = intakeSubsystem;
+
+        // Saves the two supplier functions
+        this.speed = speed;
+        this.speedSwitch = speedSwitch;
 
         // Adds the requirement of the intake subsystem so two commands can't use it at once
         addRequirements(intakeSubsystem);
@@ -34,12 +56,14 @@ public class Intake extends Command {
     @Override
     public void execute() {
         // Start the intake motors with the givin speed
-        intakeSubsystem.intake(speed);
+        intakeSubsystem.intake(speed, speedSwitch); // Todo: FINI
     }
 
     // When the command is finished
     @Override
-    public void end(boolean interrupted) {}
+    public void end(boolean interrupted) {
+        intakeSubsystem.intake(0.0);
+    }
 
     @Override
     public boolean isFinished() {

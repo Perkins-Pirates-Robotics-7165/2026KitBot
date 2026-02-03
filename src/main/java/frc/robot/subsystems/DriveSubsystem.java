@@ -17,7 +17,6 @@ public class DriveSubsystem extends SubsystemBase {
     public DriveSubsystem() {
         leftDriveFollower.follow(frontLeftDrive);
 
-        frontRightDrive.setInverted(InvertType.InvertMotorOutput);
         rightDriveFollower.follow(frontRightDrive);
     }
 

@@ -38,18 +38,34 @@ public class RobotContainer {
 
     /* Driving - Left & Right Sticks */
     driveSubsystem.setDefaultCommand(
-        new TankDrive(driveSubsystem, () -> primary.getLeftY(), () -> -primary.getRightY())
+        new TankDrive(driveSubsystem, () -> -primary.getLeftY(), () -> primary.getRightY())
     );
     
     /* Intaking */
+
+    // Intake - B
     primary.b().whileTrue(
-      new Intake(intakeSubsystem, 0.1)
+      new Intake(intakeSubsystem, 0.7, 1.0)
     );
 
-    /* Shooting */
-    primary.leftTrigger(0.1).whileTrue(
-      new Shoot(shooterSubsystem, 0.1)
+    // Reverse intake - Left Stick & B
+    primary.b().and(primary.rightStick()).whileTrue(
+      new Intake(intakeSubsystem, -0.7, -1.0)
     );
+
+
+    /* Shooting */
+
+    // Shoot - Right Trigger
+    primary.rightTrigger(0.1).whileTrue(
+      new Shoot(shooterSubsystem, 1.0)
+    );
+
+    // Reverse Shoot - Left Trigger
+    primary.leftTrigger(0.1).whileTrue(
+      new Shoot(shooterSubsystem, -1.0)
+    );
+
   }
 
   // Ran periodicly (called in Robot.java)
