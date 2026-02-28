@@ -28,6 +28,7 @@ public class RobotContainer {
 
   // Controller
   private final CommandXboxController primary = new CommandXboxController(0);
+  private final CommandXboxController secondary = new CommandXboxController(1);
 
   // The start of robot container used to configure bindings and any initializing settup
   public RobotContainer() {
@@ -39,18 +40,18 @@ public class RobotContainer {
 
     /* Driving - Left & Right Sticks */
     driveSubsystem.setDefaultCommand(
-        new TankDrive(driveSubsystem, () -> -primary.getLeftY(), () -> primary.getRightY())
+        new TankDrive(driveSubsystem, () -> -primary.getLeftY() * 0.3, () -> primary.getRightY() * 0.3)
     );
     
     /* Intaking */
 
     // Intake - Left Trigger
-    primary.leftTrigger(0.1).whileTrue(
+    secondary.leftTrigger(0.1).whileTrue(
       new Intake(intakeSubsystem, 0.7, 1.0)
     );
 
     // Reverse intake - B
-    primary.b().whileTrue(
+    secondary.b().whileTrue(
       new Intake(intakeSubsystem, -0.7, -1.0)
     );
 
@@ -58,13 +59,13 @@ public class RobotContainer {
     /* Shooting */
 
     // Shoot - Right Trigger
-    primary.rightTrigger(0.1).whileTrue(
-      new RevShoot(shooterSubsystem, 1.0, () -> primary.leftBumper().getAsBoolean())
+    secondary.rightTrigger(0.1).whileTrue(
+      new RevShoot(shooterSubsystem, -0.65, () -> secondary.leftBumper().getAsBoolean())
     );
 
     // Reverse Shoot - Left Trigger
-    primary.a().whileTrue(
-      new Shoot(shooterSubsystem, -0.7)
+    secondary.a().whileTrue(
+      new Shoot(shooterSubsystem, 0.7)
     );
 
   }
