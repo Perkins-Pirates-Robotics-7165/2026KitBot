@@ -4,11 +4,12 @@ import com.ctre.phoenix.motorcontrol.TalonSRXControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants.IntakeConstants;
 
 public class IntakeSubsystem extends SubsystemBase {
 
-    TalonSRX groundIntakeMotor = new TalonSRX(4);
-    TalonSRX switchIntakeMotor = new TalonSRX(5);
+    TalonSRX groundIntakeMotor = new TalonSRX(IntakeConstants.groundIntakeMotorID);
+    TalonSRX switchMotor = new TalonSRX(IntakeConstants.switchMotorID);
 
     public IntakeSubsystem() {}
 
@@ -19,7 +20,7 @@ public class IntakeSubsystem extends SubsystemBase {
      */
     public void intake(double speed) {
         groundIntakeMotor.set(TalonSRXControlMode.PercentOutput, speed);
-        switchIntakeMotor.set(TalonSRXControlMode.PercentOutput, speed);
+        switchMotor.set(TalonSRXControlMode.PercentOutput, speed);
     }
 
     /*
@@ -28,9 +29,9 @@ public class IntakeSubsystem extends SubsystemBase {
      * @param speed - Ground motor speed percentage [-1.0, 1.0]
      * @param speedSwitch - Switch motor speed percentage [-1.0, 1.0]
      */
-    public void intake(double speed, double speedSwitch) {
-        groundIntakeMotor.set(TalonSRXControlMode.PercentOutput, speed);
-        switchIntakeMotor.set(TalonSRXControlMode.PercentOutput, speedSwitch);
+    public void intake(double intakeSpeed, double speedSwitch) {
+        groundIntakeMotor.set(TalonSRXControlMode.PercentOutput, intakeSpeed);
+        switchMotor.set(TalonSRXControlMode.PercentOutput, speedSwitch);
     }
 
     // Period function on field, called every 20ms

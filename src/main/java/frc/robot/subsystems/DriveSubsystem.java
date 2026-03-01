@@ -4,14 +4,15 @@ import com.ctre.phoenix.motorcontrol.TalonSRXControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants.DriveConstants;
 
 public class DriveSubsystem extends SubsystemBase {
 
-    TalonSRX frontLeftDrive = new TalonSRX(0);
-    TalonSRX leftDriveFollower = new TalonSRX(1);
+    TalonSRX frontLeftDrive = new TalonSRX(DriveConstants.frontLeftDriveMotorID);
+    TalonSRX leftDriveFollower = new TalonSRX(DriveConstants.frontLeftFollowerMotorID);
 
-    TalonSRX frontRightDrive = new TalonSRX(2);
-    TalonSRX rightDriveFollower = new TalonSRX(3);
+    TalonSRX frontRightDrive = new TalonSRX(DriveConstants.frontRightDriveMotorID);
+    TalonSRX rightDriveFollower = new TalonSRX(DriveConstants.frontRightFollowerMotorID);
 
     public DriveSubsystem() {
         leftDriveFollower.follow(frontLeftDrive);

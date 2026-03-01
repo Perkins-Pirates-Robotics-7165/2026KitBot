@@ -1,21 +1,28 @@
 package frc.robot.subsystems;
 
-import java.util.function.Supplier;
-
-import com.ctre.phoenix.motorcontrol.TalonSRXControlMode;
-import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+import com.revrobotics.PersistMode;
+import com.revrobotics.ResetMode;
 import com.revrobotics.spark.SparkFlex;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
+import com.revrobotics.spark.config.SparkFlexConfig;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants.ShooterConstants;
 
 public class ShooterSubsystem extends SubsystemBase {
 
-    TalonSRX groundIntakeMotor = new TalonSRX(4);
-    TalonSRX switchIntakeMotor = new TalonSRX(5);
-    SparkFlex shooterMotor = new SparkFlex(9, MotorType.kBrushless);
+    SparkFlex shooterMotor = new SparkFlex(ShooterConstants.shooterMotorID, MotorType.kBrushless);
 
-    public ShooterSubsystem() {}
+    public ShooterSubsystem() {
+
+        // Create a configurator for the spark flex, and invert the motor
+        SparkFlexConfig sparkFlexConfig = new SparkFlexConfig();
+        sparkFlexConfig.encoder.inverted(true);
+
+        // Set the configuration
+        shooterMotor.configure(sparkFlexConfig, ResetMode.kNoResetSafeParameters, PersistMode.kPersistParameters);
+
+    }
 
     /*
      * Start the shooter
@@ -24,17 +31,6 @@ public class ShooterSubsystem extends SubsystemBase {
      */
     public void shoot(double speed) {
         shooterMotor.set(speed);
-        switchIntakeMotor.set(TalonSRXControlMode.PercentOutput, speed);
-    }
-
-    public void revShoot(double speed, Supplier<Boolean> startGroundIntake) {
-        shooterMotor.set(speed);
-
-        if (startGroundIntake.get()) {
-            switchIntakeMotor.set(TalonSRXControlMode.PercentOutput, speed);
-        } else {
-            switchIntakeMotor.set(TalonSRXControlMode.PercentOutput, 0.0);
-        }
     }
 
     // Period function on field, called every 20ms
